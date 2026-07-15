@@ -15,7 +15,7 @@ interface AppContextProviderProps {
 }
 
 export const AppContextProvider: React.FC<AppContextProviderProps> = ({ children }) => {
-  const [state, setState] = useState<AppState>({
+  const [state] = useState<AppState>({
     user: null,
   });
 
