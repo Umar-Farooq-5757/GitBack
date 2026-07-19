@@ -1,16 +1,19 @@
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import { AppSidebar } from "./components/AppSidebar";
-import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
+import { SidebarProvider } from "./components/ui/sidebar";
+import Header from "./components/Header";
 
 function App() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main style={{ padding: "1rem" }}>
-      <SidebarTrigger className="p-2 border rounded-md hover:bg-zinc-100" />
-        <Outlet />
-      </main>
+      <div className="flex flex-col flex-1 min-h-screen">
+        <Header />
+        <main className="p-4 flex-1">
+          <Outlet />
+        </main>
+      </div>
     </SidebarProvider>
   );
 }
