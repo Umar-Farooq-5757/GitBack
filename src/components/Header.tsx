@@ -12,7 +12,15 @@ const Header = () => {
             type="text"
             placeholder="Enter a GitHub repository (owner/repo)"
           />
-          <button className="bg-blue-600 text-white px-3 py-0.5 rounded-l-none rounded-r-md">
+          <button
+            onClick={() =>
+              window.open(
+                "https://github.com/umar-farooq-5757/gitback",
+                "_blank",
+                "noopener,noreferrer",
+              )
+            }
+            className="bg-blue-600 text-white px-3 py-0.5 rounded-l-none rounded-r-md">
             Search
           </button>
         </div>
