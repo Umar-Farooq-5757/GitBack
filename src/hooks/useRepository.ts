@@ -1,30 +1,42 @@
 import { useEffect, useState } from "react";
 import { getRepository } from "../api/github";
 
-export function useRepository(
-  owner: string,
-  repo: string,
-) {
-  const [data, setData] = useState<any>();
+export function useRepository(owner: string, repo: string) {
+  const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+
     async function load() {
+      setLoading(true);
+      setError(null);
+
       try {
-        setLoading(true);
-        const repository = await getRepository(
-          owner,
-          repo,
-        );
-        setData(repository);
+        const repository = await getRepository(owner, repo);
+
+        if (!cancelled) {
+          setData(repository);
+        }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
+        if (!cancelled) {
+          setError(
+            err instanceof Error ? err.message : "Failed to load repository.",
+          );
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
+
     load();
+
+    return () => {
+      cancelled = true;
+    };
   }, [owner, repo]);
 
   return {

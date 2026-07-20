@@ -17,8 +17,22 @@ import { IoClose, IoPeople, IoPieChartOutline } from "react-icons/io5";
 import moment from "moment";
 import { MdUpdate } from "react-icons/md";
 import { CiFileOn } from "react-icons/ci";
+import { useRepository } from "../hooks/useRepository";
 
 const Home = () => {
+const { data, loading, error } = useRepository(
+  "brazedagreat",
+  "bit-focus"
+);
+
+if (loading) {
+  return <div>Loading repository...</div>;
+}
+
+if (error) {
+  return <div>{error}</div>;
+}
+console.log("Repository:", data);
   return (
     <div>
       {/* Overview of the repo */}

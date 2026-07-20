@@ -98,6 +98,9 @@ async function request<T>(url: string): Promise<T> {
 
   const json = (await response.json()) as ApiResponse<T>;
 
+console.log("SERVER RESPONSE");
+console.log(json);
+
   if (!json.success) {
     throw new Error("API Error");
   }

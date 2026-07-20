@@ -1,7 +1,8 @@
-import { GITHUB_TOKEN } from "./env";
+import { getGithubToken } from "./env";
 
+const token = getGithubToken();
 const GITHUB_GRAPHQL_ENDPOINT = "https://api.github.com/graphql";
-
+console.log("TOKEN EXISTS:", !!token);
 export async function graphqlRequest<T>(
   query: string,
   variables: Record<string, unknown>,
@@ -11,7 +12,7 @@ export async function graphqlRequest<T>(
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -22,6 +23,7 @@ export async function graphqlRequest<T>(
   );
 
   const json = await response.json();
+  console.log(json);
 
   if (json.errors) {
     throw new Error(json.errors[0].message);
